@@ -14,7 +14,11 @@ from twisted.web.server import Site
 from twisted.web.resource import Resource
 from twisted.web.static import File
 
-root = Resource().putChild('', File('/webserver'))
+def defCB(data):
+	print(data)
+
+root = File('/home/fady/Documents/GitRepo/twisted-experiments/webcontents')
 endpoint = GateServerEndpoint.CreateFromConfig(reactor, 80, "gatekey0z17z221")
-endpoint.listen(Site(root))
+d = endpoint.listen(Site(root))
+d.addCallback(defCB)
 reactor.run()
